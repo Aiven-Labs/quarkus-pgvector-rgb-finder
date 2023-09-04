@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB Color Boxes</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-left: 10px;
+            margin-top: 5px;
+            width: 20px;
+        }
+
+        input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #fetchData {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #fetchData:hover {
+            background-color: #0056b3;
+        }
+
+        #colorBoxContainer {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .color-box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin: 0 10px; /* Add margin to separate the color boxes */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>RGB Nearest vectors</h1>
+    <div class="input-group">
+        <label for="redInput">R:</label>
+        <input type="number" id="redInput" min="0" max="255" placeholder="0" value="0">
+        <label for="greenInput">G:</label>
+        <input type="number" id="greenInput" min="0" max="255" placeholder="0" value="0">
+        <label for="blueInput">B:</label>
+        <input type="number" id="blueInput" min="0" max="255" placeholder="0" value="0">
+    </div>
+    <button id="fetchData">Top 5 nearest colors</button>
+    <div id="colorBoxContainer">
+        <div id="colorBox" class="color-box"></div>
+    </div>
+</div>
+    <script>
+        // Function to create a color box element
+        function createColorBox(rgb) {
+            const box = document.createElement("div");
+            box.style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+            box.style.width = "100px";
+            box.style.height = "100px";
+            box.style.margin = "10px";
+            box.innerHTML = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+            return box;
+        }
+
+        // Function to fetch data via AJAX
+        function fetchData() {
+            const red = document.getElementById("redInput").value;
+            const green = document.getElementById("greenInput").value;
+            const blue = document.getElementById("blueInput").value;
+            
+            $.ajax({
+                url: `http://localhost:8080/colors`,
+                method: "POST",
+                dataType: "json",
+                data: "[" + red + "," + green + "," + blue + "]",
+                success: function (data) { 
+                    const colorBoxes = document.getElementById("colorBoxContainer");
+                    colorBoxes.innerHTML = ""; // Clear existing boxes
+
+                    data.forEach(item => {
+                        const colorBox = createColorBox(item.rgb);
+                        colorBoxes.appendChild(colorBox);
+                    });
+                },
+                error: function () {
+                    console.error("Error fetching data.");
+                }
+            });
+        }
+
+        // Attach event listener to the "Fetch Data" button
+        document.getElementById("fetchData").addEventListener("click", fetchData);
+    </script>
+</body>
+</html>
