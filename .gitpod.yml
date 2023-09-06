@@ -1,5 +1,6 @@
 image: gitpod/workspace-java-17
 tasks:
+  - init: sudo apt install python3-pip -y
   - init: ./mvnw install -DskipTests=true
   - name: Install avn CLI
     init: pip install aiven-client
