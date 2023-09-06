@@ -2,6 +2,5 @@ image: gitpod/workspace-java-17
 tasks:
   - before: sudo apt install python3-pip -y
     init: pip install aiven-client
+    command: sudo apt-get install -y postgresql-client
   - init: ./mvnw install -DskipTests=true
-  - name: install psql
-    init: sudo apt-get install -y postgresql-client
