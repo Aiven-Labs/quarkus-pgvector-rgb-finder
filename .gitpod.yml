@@ -1,0 +1,7 @@
+image: gitpod/workspace-java-17
+tasks:
+  - init: ./mvnw install -DskipTests=true
+  - name: Install avn CLI
+    init: pip install aiven-client
+  - name: install psql
+    init: sudo apt-get install -y postgresql-client
