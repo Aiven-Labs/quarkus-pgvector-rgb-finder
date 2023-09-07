@@ -1,3 +1,6 @@
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Aiven-Labs/quarkus-pgvector-rgb-finder)
+
+
 # RGB Nearest vectors
 
 A simple project which demonstrates vector similarity search using Postgres/PG-Vector/Quarkus with Hibernate Panache.
@@ -10,7 +13,22 @@ You will a need a Postgres instance with the `pg-vector` extension.
 
 You can get a completely **free** Postgres instance on Aiven, use this special referral [link](https://go.aiven.io/sebi-signup) to get extra credits to try out the other services ("Apache Kafka", "Clickhouse", "Apache Flink" etc ...), no credit cards asked.
 
-Once connected to your DB , type : 
+If you are using `Gitpod` , the Aiven CLI `avn` is already installed for you, so you can do : 
+
+```
+
+avn user login 
+
+```
+
+and then : 
+
+```
+avn service create postgres-rgb  -t pg --plan  free-1-5gb --cloud aws-us-east-1 
+```
+
+
+Once connected to your DB (with `psql` for instance, which is already installed for you if you are using `Gitpod`, check (Aiven doc)[https://docs.aiven.io/docs/products/postgresql/getting-started] ) , type : 
 
 ```
 CREATE EXTENSION vector;
@@ -21,7 +39,7 @@ In the `src/main/resources/application.properties` set the correct values for yo
 
 ## Running the application in dev mode
 
-You can run your application in dev mode that enables live coding using:
+
 ```shell script
 ./mvnw quarkus:dev
 ```
