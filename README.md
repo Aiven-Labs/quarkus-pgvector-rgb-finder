@@ -24,7 +24,7 @@ avn user login
 and then : 
 
 ```
-avn service create postgres-rgb  -t pg --plan  free-1-5gb --cloud aws-us-east-1 
+avn service create postgres-rgb  -t pg --plan  free-1-5gb --cloud do-ams
 ```
 
 
